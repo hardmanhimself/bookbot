@@ -3,25 +3,23 @@ def main():
     text = get_book_text(book_path)
     num_words = get_num_words(text)
     chars_dict = get_chars_dict(text)
-    report = get_report(book_path)
+    chars_sorted_list = chars_dict_to_sorted_list(chars_dict)
+
+    print(f"--- Begin report on {book_path} ---")
+    print(f"{num_words} words found in document")
+    print()
+    for item in chars_sorted_list:
+        if item["letter"].isalpha():
+            print(f"The '{item["letter"]}' character was found {item["num"]} times")
+    print("--- End report ---")
     
     
-def get_report(book):
-    text = get_book_text(book)
-    num_words = get_num_words(text)
-    chars_dict = get_chars_dict(text)
+def chars_dict_to_sorted_list(chars_dict):
     chars_dict_list = []
     for c in chars_dict:
-        if c.isalpha() == True:
-            mini_dict = {"letter": c, "num": chars_dict[c]}
-            chars_dict_list.append(mini_dict)
+        chars_dict_list.append({"letter": c, "num": chars_dict[c]})
     chars_dict_list.sort(reverse=True, key=sort_on)
-
-    print(f"--- Begin report on {book} ---")
-    print(f"{num_words} words found in document")
-    for c in chars_dict_list:
-        print(f"The '{c["letter"]}' character was found {c["num"]} times")
-    print("--- End report ---")
+    return chars_dict_list
 
 
 def sort_on(dict):
